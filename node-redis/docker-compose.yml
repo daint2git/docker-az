@@ -18,4 +18,3 @@ services:
       - SERVER_PORT=${SERVER_PORT}
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_PORT=${REDIS_PORT}
-      
