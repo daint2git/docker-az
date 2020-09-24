@@ -1,0 +1,21 @@
+version: "3.4"
+
+services:
+  app_redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+  app_server:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - SERVER_HOST=${SERVER_HOST}
+      - SERVER_PORT=${SERVER_PORT}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      
