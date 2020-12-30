@@ -1,0 +1,51 @@
+version: '3.7'
+
+services:
+  # Proxies requests to internal services
+  reverse-proxy:
+    image: nginx:1.17.10
+    container_name: mini-reverse-proxy_reverse_proxy
+    depends_on:
+      - app
+      - service_a
+      - service_b
+    volumes:
+      - ./reverse_proxy/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+    networks:
+      - my_network
+
+  app:
+    container_name: mini-reverse-proxy_app
+    build:
+      context: ./app
+    ports:
+      - 8080:80
+    depends_on:
+      - service_a
+      - service_b
+    networks:
+      - my_network
+
+  service_a:
+    container_name: mini-reverse-proxy_service_a
+    build:
+      context: ./service_a
+    ports:
+      - 5001:5001
+    networks:
+      - my_network
+
+  service_b:
+    container_name: mini-reverse-proxy_service_b
+    build:
+      context: ./service_b
+    ports:
+      - 5002:5002
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge

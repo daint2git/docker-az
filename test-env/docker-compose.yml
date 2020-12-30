@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  app:
+    container_name: test-env
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args: 
+        - TEST_ARG=abc
+    ports:
+      - 6969:6969
+    environment:
+      - TEST_ENV=dai
+      - XYZ=$ABC
+    # env_file: 
+    #   - .env
